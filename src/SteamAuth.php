@@ -50,7 +50,7 @@ class SteamAuth implements SteamAuthInterface
     /**
      * @var string
      */
-    const STEAM_INFO_URL = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=%s&steamids=%s';
+    const STEAM_INFO_URL = 'ISteamUser/GetPlayerSummaries/v0002/?key=%s&steamids=%s';
 
     /**
      * @var string
@@ -271,7 +271,9 @@ class SteamAuth implements SteamAuthInterface
             throw new RuntimeException('The Steam API key has not been specified.');
         }
 
-        $reponse = $this->guzzleClient->request('GET', sprintf(self::STEAM_INFO_URL, Config::get('steam-auth.api_key'), $this->steamId));
+        $steamInfoUrl = Config::get('steam-auth.api_url') . '/' . self::STEAM_INFO_URL;
+
+        $reponse = $this->guzzleClient->request('GET', sprintf($steamInfoUrl, Config::get('steam-auth.api_key'), $this->steamId));
         $json = json_decode($reponse->getBody(), true);
 
         $this->steamInfo = new SteamInfo($json['response']['players'][0]);

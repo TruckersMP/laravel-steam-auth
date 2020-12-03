@@ -18,6 +18,11 @@ return [
     'api_key' => env('STEAM_API_KEY', ''),
 
     /*
+     * Steam Web API endpoint
+     */
+    'api_url' => env('STEAM_API_URL', 'http://api.steampowered.com'),
+
+    /*
      * Is using https ?
      */
     'https' => false,
